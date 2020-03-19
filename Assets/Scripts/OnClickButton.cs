@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class OnClickButton : MonoBehaviour
 {
@@ -24,13 +25,13 @@ public class OnClickButton : MonoBehaviour
 
     public void Load()
     {
-        // 讀取選單 再看看要不要做
+        // 未製作
         menuControll.SetMenuActive("LoadMenu");
     }
 
     public void Option()
     {
-        // 選項選單 再看看要不要做
+        // 未製作
         menuControll.SetMenuActive("OptionMenu");
     }
 
@@ -73,7 +74,21 @@ public class OnClickButton : MonoBehaviour
 
     public void Custom()
     {
-        // 自訂迷宮選單
         menuControll.SetMenuActive("CustomMenu");
+    }
+
+    public void CustomPlay()
+    {
+        GameObject[] sliders = GameObject.FindGameObjectsWithTag("slider");
+        MazeData.MAZE_X = (int)sliders[0].GetComponent<Slider>().value;
+        MazeData.MAZE_Y = (int)sliders[1].GetComponent<Slider>().value;
+        SceneManager.LoadScene("MainScene");
+    }
+
+    public void ClickReset()
+    {
+        OptionData.VOLUME = 1f;
+        OptionData.M_SensitivityX = 2f;
+        OptionData.M_SensitivityY = 2f;
     }
 }

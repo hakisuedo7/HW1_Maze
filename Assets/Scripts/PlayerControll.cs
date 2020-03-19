@@ -19,8 +19,6 @@ public class PlayerControll : MonoBehaviour
         MouseY = 2
     }
     RotationAxes m_axes = RotationAxes.MouseXandY;
-    public float m_sensitivityX;
-    public float m_sensitivityY;
 
     // 水平方向
     public float m_minimumX;
@@ -99,8 +97,8 @@ public class PlayerControll : MonoBehaviour
     {
         if (m_axes == RotationAxes.MouseXandY)
         {
-            float m_rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * m_sensitivityX;
-            m_rotationY += Input.GetAxis("Mouse Y") * m_sensitivityY;
+            float m_rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * OptionData.M_SensitivityX;
+            m_rotationY += Input.GetAxis("Mouse Y") * OptionData.M_SensitivityY;
             m_rotationY = Mathf.Clamp(m_rotationY, m_minimumY, m_maximumY);
 
             transform.localEulerAngles = new Vector3(0, m_rotationX, 0);
@@ -108,11 +106,11 @@ public class PlayerControll : MonoBehaviour
         }
         else if (m_axes == RotationAxes.MouseX)
         {
-            transform.Rotate(0, Input.GetAxis("Mouse X") * m_sensitivityX, 0);
+            transform.Rotate(0, Input.GetAxis("Mouse X") * OptionData.M_SensitivityX, 0);
         }
         else
         {
-            m_rotationY += Input.GetAxis("Mouse Y") * m_sensitivityY;
+            m_rotationY += Input.GetAxis("Mouse Y") * OptionData.M_SensitivityY;
             m_rotationY = Mathf.Clamp(m_rotationY, m_minimumY, m_maximumY);
 
             FP.transform.localEulerAngles = new Vector3(-m_rotationY, 0, 0);

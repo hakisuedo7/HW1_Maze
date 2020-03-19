@@ -65,11 +65,15 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraControll.cs" />
     <Compile Include="Assets\Scripts\GameControll.cs" />
+    <Compile Include="Assets\Scripts\GetCurrentOptionData.cs" />
     <Compile Include="Assets\Scripts\MazeBlockData.cs" />
     <Compile Include="Assets\Scripts\MazeData.cs" />
     <Compile Include="Assets\Scripts\MenuControll.cs" />
     <Compile Include="Assets\Scripts\OnClickButton.cs" />
+    <Compile Include="Assets\Scripts\OnValueChange.cs" />
+    <Compile Include="Assets\Scripts\OptionData.cs" />
     <Compile Include="Assets\Scripts\PlayerControll.cs" />
+    <Compile Include="Assets\Scripts\SetSliderNum.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
