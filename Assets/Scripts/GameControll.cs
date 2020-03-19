@@ -15,9 +15,6 @@ public class GameControll : MonoBehaviour
     private int MazeSizeX;                                  // 迷宮大小 x
     private int MazeSizeY;                                  // 迷宮大小 y
 
-    public int SizeX;                                       // 迷宮大小 x
-    public int SizeY;                                       // 迷宮大小 y
-
     GameObject playerModel, wallModel;                      // GameObject 玩家 & 牆壁 模板
     GameObject player;                                      // GameObject 玩家 & 牆壁
 
@@ -36,8 +33,8 @@ public class GameControll : MonoBehaviour
     void Start()
     {
         // 設定迷宮大小
-        MazeSizeX = SizeX;
-        MazeSizeY = SizeY;
+        MazeSizeX = MazeData.MAZE_X;
+        MazeSizeY = MazeData.MAZE_Y;
 
         // 動態載入角色 && 牆壁
         playerModel = Resources.Load<GameObject>("Prefabs/Cube");
@@ -80,6 +77,11 @@ public class GameControll : MonoBehaviour
                 Debug.Log("通關");
                 GameOver = true;
             }
+        }
+        // 退回選單
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MainMenu");
         }
     }
     void CreatePlayer(Vector3 position)
