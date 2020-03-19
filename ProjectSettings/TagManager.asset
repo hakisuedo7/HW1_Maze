@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Wall
   - slider
+  - inputField
   layers:
   - Default
   - TransparentFX

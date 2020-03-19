@@ -42,7 +42,7 @@ public class PlayerControll : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!gameControll.ISPAUSE)
+        if(!gameControll.ISPAUSE && !gameControll.ISGAMEOVER)
         {
             // 移動
             move();

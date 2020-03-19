@@ -119,6 +119,23 @@ public class OnClickButton : MonoBehaviour
     }
     public void Save()
     {
-        // 存迷宮
+        gameControll.ShowInputBox();
+    }
+    public void FileCancel()
+    {
+        gameControll.HideInputBox();
+    }
+    public void FileConfirm()
+    {
+        TMPro.TextMeshProUGUI inputField = GameObject.FindGameObjectWithTag("inputField").GetComponentsInChildren<TMPro.TextMeshProUGUI>()[1];
+        string filename = inputField.text;
+        filename = filename.Substring(0, filename.Length - 1);          // 扣掉空字元
+
+        if(filename == "")
+        {
+            Debug.LogError("名稱不能為空");
+            return;
+        }
+        gameControll.saveMazeData(filename);
     }
 }

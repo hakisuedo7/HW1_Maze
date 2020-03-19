@@ -2,31 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class GameControll : MonoBehaviour
 {
-    [SerializeField] private GameObject PauseMenu;          // 暫停選單GameObject
-    [SerializeField] private GameObject OptionMenu;         // 參數調整選單GameObject
-    private static bool isPause = false;                    // 是否暫停
-    public bool ISPAUSE                                     // 現在狀態是否暫停(給其他script調用)
+    [SerializeField] private GameObject PauseMenu;              // 暫停選單GameObject
+    [SerializeField] private GameObject OptionMenu;             // 參數調整選單GameObject
+    [SerializeField] private GameObject GameComplete;           // 通關畫面
+    [SerializeField] private GameObject InputBox;               // 取名框
+    private static bool isPause = false;                        // 是否暫停
+    private static bool GameOver = false;                       // 遊戲是否結束
+    public bool ISPAUSE                                         // 現在狀態是否暫停(給其他script參考)
     {
         get { return isPause; }
     }
+    public bool ISGAMEOVER                                      // 現在狀態是否結束(給其他script參考)
+    {
+        get { return GameOver; }
+    }
 
-    const float WallScale = 3.0f;                           // 牆壁Scale Size(固定)
-    bool GameOver;                                          // 遊戲結束判斷
-    Vector3 startPoint;                                     // 牆壁生成初始點
-    Vector3 endPoint;                                       // 出口block中心位置
-    Quaternion FrontWallQuat = Quaternion.identity;         // 牆壁正面Quaternion 
-    Quaternion SideWallQuat = Quaternion.Euler(0, 90, 0);   // 牆壁側面Quaternion
+    const float WallScale = 3.0f;                               // 牆壁Scale Size(固定)
+    Vector3 startPoint;                                         // 牆壁生成初始點
+    Vector3 endPoint;                                           // 出口block中心位置
+    Quaternion FrontWallQuat = Quaternion.identity;             // 牆壁正面Quaternion 
+    Quaternion SideWallQuat = Quaternion.Euler(0, 90, 0);       // 牆壁側面Quaternion
 
-    private int MazeSizeX;                                  // 迷宮大小 x
-    private int MazeSizeY;                                  // 迷宮大小 y
+    private int MazeSizeX;                                      // 迷宮大小 x
+    private int MazeSizeY;                                      // 迷宮大小 y
 
-    GameObject playerModel, wallModel;                      // GameObject 玩家 & 牆壁 模板
-    GameObject player;                                      // GameObject 玩家 & 牆壁
+    GameObject playerModel, wallModel;                          // GameObject 玩家 & 牆壁 模板
+    GameObject player;                                          // GameObject 玩家 & 牆壁
 
-    List<MazeBlockData> mazeBlock = new List<MazeBlockData>();
+    List<MazeBlockData> mazeBlock = new List<MazeBlockData>();  // 迷宮狀態
     List<int[]> randDir = new List<int[]>();
 
     enum WALL_TYPE
@@ -40,9 +47,23 @@ public class GameControll : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // 隱藏PauseMenu && OptionMenu
-        PauseMenu.SetActive(false);
-        OptionMenu.SetActive(false);
+        if (MazeData.LOAD)
+        {
+            Debug.Log("讀取地圖");
+        }
+        else
+        {
+            Debug.Log("自動生成地圖");
+        }
+
+        // 隱藏視窗 && 鼠標
+        HideAllScreen();
+        HideCursor();
+
+        // 時間開始 && 初始值設定
+        Time.timeScale = 1f;
+        isPause = false;
+        GameOver = false;
 
         // 設定迷宮大小
         MazeSizeX = MazeData.MAZE_X;
@@ -62,22 +83,26 @@ public class GameControll : MonoBehaviour
         CreateMaze();
         // 叫出玩家
         CreatePlayer(startPoint);
-
-        GameOver = false;
-        Resume();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // 判斷到達終點
+        // 判斷到達終點(座標)
         if (!GameOver)
         {
-            if(Mathf.Abs(player.transform.position.x - endPoint.x) <= WallScale / 2 && player.transform.position.z - endPoint.z >= WallScale / 2)
+            if(Mathf.Abs(player.transform.position.x - endPoint.x) <= WallScale / 2 && player.transform.position.z - endPoint.z >= WallScale)
             {
-                Debug.Log("通關");
                 GameOver = true;
             }
+        }
+        else
+        {
+            ShowCursor();
+            if (!InputBox.activeSelf)
+                GameComplete.SetActive(true);
+            else
+                GameComplete.SetActive(false);
         }
         // 判斷是否暫停
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -92,18 +117,33 @@ public class GameControll : MonoBehaviour
             }
         }
     }
-    public void Resume()
+    void HideAllScreen()
+    {
+        PauseMenu.SetActive(false);
+        OptionMenu.SetActive(false);
+        GameComplete.SetActive(false);
+        InputBox.SetActive(false);
+    }
+    void HideCursor()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        PauseMenu.SetActive(false);
+    }
+    void ShowCursor()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+    public void Resume()
+    {
+        HideAllScreen();
+        HideCursor();
         Time.timeScale = 1f;
         isPause = false;
     }
     public void Pause()
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        ShowCursor();
         PauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isPause = true;
@@ -279,5 +319,30 @@ public class GameControll : MonoBehaviour
     {
         int[] move = new int[] { 0, 1, 0, -1 };
         return y + move[dir];
+    }
+
+    public void ShowInputBox()
+    {
+        InputBox.SetActive(true); 
+    }
+    public void HideInputBox()
+    {
+        InputBox.SetActive(false);
+    }
+    public void saveMazeData(string filename)
+    {
+        HideInputBox();
+        string data = filename + "\n";
+
+        // 紀錄長寬
+        data += MazeData.MAZE_X + " " + MazeData.MAZE_Y + "\n";
+
+        // 紀錄牆壁狀態
+        foreach(MazeBlockData block in mazeBlock)
+        {
+            data += block.getX() + " " + block.getY() + " " + block.getWallType() + "\n";
+        }
+
+        File.WriteAllText(MazeData.path + filename + ".dat", data);
     }
 }
