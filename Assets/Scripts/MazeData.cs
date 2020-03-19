@@ -8,8 +8,8 @@ public static class MazeData
     private static int min = 5;
     private static int max = 50;
 
-    private static int _mazex = 10;
-    private static int _mazey = 10;
+    private static int _mazex = 15;
+    private static int _mazey = 15;
 
     public static int MAZE_X {
         get { return _mazex; }

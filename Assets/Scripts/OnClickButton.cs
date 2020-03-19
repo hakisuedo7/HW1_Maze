@@ -7,10 +7,12 @@ using UnityEngine.UI;
 public class OnClickButton : MonoBehaviour
 {
     MenuControll menuControll;
+    GameControll gameControll;
     // Start is called before the first frame update
     void Start()
     {
         menuControll = GameObject.FindGameObjectWithTag("GameController").GetComponent<MenuControll>();
+        gameControll = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameControll>();
     }
 
     // Update is called once per frame
@@ -31,7 +33,6 @@ public class OnClickButton : MonoBehaviour
 
     public void Option()
     {
-        // 未製作
         menuControll.SetMenuActive("OptionMenu");
     }
 
@@ -90,5 +91,34 @@ public class OnClickButton : MonoBehaviour
         OptionData.VOLUME = 1f;
         OptionData.M_SensitivityX = 2f;
         OptionData.M_SensitivityY = 2f;
+    }
+
+    public void Resume()
+    {
+        gameControll.Resume();
+    }
+    public void Restart()
+    {
+        gameControll.Restart();
+    }
+    public void StartNewGame()
+    {
+        SceneManager.LoadScene("MainScene");
+    }
+    public void GameOption()
+    {
+        gameControll.showOptionMenu();
+    }
+    public void BackToPauseMenu()
+    {
+        gameControll.hideOptionMenu();
+    }
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+    public void Save()
+    {
+        // 存迷宮
     }
 }

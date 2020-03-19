@@ -5,6 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class GameControll : MonoBehaviour
 {
+    [SerializeField] private GameObject PauseMenu;          // 暫停選單GameObject
+    [SerializeField] private GameObject OptionMenu;         // 參數調整選單GameObject
+    private static bool isPause = false;                    // 是否暫停
+    public bool ISPAUSE                                     // 現在狀態是否暫停(給其他script調用)
+    {
+        get { return isPause; }
+    }
+
     const float WallScale = 3.0f;                           // 牆壁Scale Size(固定)
     bool GameOver;                                          // 遊戲結束判斷
     Vector3 startPoint;                                     // 牆壁生成初始點
@@ -32,6 +40,10 @@ public class GameControll : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // 隱藏PauseMenu && OptionMenu
+        PauseMenu.SetActive(false);
+        OptionMenu.SetActive(false);
+
         // 設定迷宮大小
         MazeSizeX = MazeData.MAZE_X;
         MazeSizeY = MazeData.MAZE_Y;
@@ -39,36 +51,25 @@ public class GameControll : MonoBehaviour
         // 動態載入角色 && 牆壁
         playerModel = Resources.Load<GameObject>("Prefabs/Cube");
         wallModel = Resources.Load<GameObject>("Prefabs/Wall");
+
+        // 設定起點 && 終點
         startPoint = new Vector3(-(MazeSizeX - 1) * WallScale / 2, 0, -(MazeSizeY - 1) * WallScale / 2);
         endPoint = Vector3.zero - startPoint;
 
-        // 隱藏滑標
-        Cursor.visible = false;
         // 給方向值
         SetRandDir();
         // 製作迷宮
         CreateMaze();
         // 叫出玩家
         CreatePlayer(startPoint);
+
         GameOver = false;
+        Resume();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // 重新開始這張圖
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Debug.Log("重新開始");
-            Destroy(player);
-            CreatePlayer(startPoint);
-            GameOver = false;
-        }
-        // 重新建造新地圖
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            SceneManager.LoadScene("MainScene");
-        }
         // 判斷到達終點
         if (!GameOver)
         {
@@ -78,11 +79,50 @@ public class GameControll : MonoBehaviour
                 GameOver = true;
             }
         }
-        // 退回選單
+        // 判斷是否暫停
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("MainMenu");
+            if (isPause)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
         }
+    }
+    public void Resume()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        PauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        isPause = false;
+    }
+    public void Pause()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        PauseMenu.SetActive(true);
+        Time.timeScale = 0f;
+        isPause = true;
+    }
+    public void Restart()
+    {
+        Debug.Log("重新開始");
+        Resume();
+        Destroy(player);
+        CreatePlayer(startPoint);
+        GameOver = false;
+    }
+    public void showOptionMenu()
+    {
+        OptionMenu.SetActive(true);
+    }
+    public void hideOptionMenu()
+    {
+        OptionMenu.SetActive(false);
     }
     void CreatePlayer(Vector3 position)
     {

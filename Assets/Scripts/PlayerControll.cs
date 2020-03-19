@@ -9,8 +9,10 @@ public class PlayerControll : MonoBehaviour
     const float MOVE_FAST = 1.5f;
     float move_len;
     float move_fast;
+
     Camera FP;
     CharacterController controller;
+    GameControll gameControll;
 
     enum RotationAxes
     {
@@ -34,15 +36,19 @@ public class PlayerControll : MonoBehaviour
     {
         FP = GetComponentInChildren<Camera>();
         controller = GetComponentInChildren<CharacterController>();
+        gameControll = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameControll>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // 移動
-        move();
-        // 轉動視角
-        rotate();
+        if(!gameControll.ISPAUSE)
+        {
+            // 移動
+            move();
+            // 轉動視角
+            rotate();
+        }
     }
 
     void move()
