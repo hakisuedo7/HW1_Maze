@@ -22,6 +22,7 @@ public class OnClickButton : MonoBehaviour
     }
     public void Play()
     {
+        MazeData.LOAD = false;
         menuControll.SetMenuActive("SelectDifficultyMenu");
     }
 
@@ -53,8 +54,8 @@ public class OnClickButton : MonoBehaviour
 
     public void Easy()
     {
-        MazeData.MAZE_X = 10;
-        MazeData.MAZE_Y = 10;
+        MazeData.MAZE_X = 5;
+        MazeData.MAZE_Y = 5;
         SceneManager.LoadScene("MainScene");
     }
 

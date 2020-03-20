@@ -12,6 +12,14 @@ public class MazeBlockData
         this.visited = visited;
     }
 
+    public MazeBlockData(int x, int y, int wallType)
+    {
+        this.x = x;
+        this.y = y;
+        this.wallType = wallType;
+        this.visited = true;
+    }
+
     public int getX() { return x; }
     public int getY() { return y; }
     public int getWallType() { return wallType; }

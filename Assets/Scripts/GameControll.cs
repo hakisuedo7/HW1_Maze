@@ -47,15 +47,6 @@ public class GameControll : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (MazeData.LOAD)
-        {
-            Debug.Log("讀取地圖");
-        }
-        else
-        {
-            Debug.Log("自動生成地圖");
-        }
-
         // 隱藏視窗 && 鼠標
         HideAllScreen();
         HideCursor();
@@ -77,10 +68,20 @@ public class GameControll : MonoBehaviour
         startPoint = new Vector3(-(MazeSizeX - 1) * WallScale / 2, 0, -(MazeSizeY - 1) * WallScale / 2);
         endPoint = Vector3.zero - startPoint;
 
-        // 給方向值
-        SetRandDir();
-        // 製作迷宮
-        CreateMaze();
+        if (MazeData.LOAD)
+        {
+            mazeBlock = MazeData.GetMaze(MazeData.MAZENAME);
+        }
+        else
+        {
+            // 給方向值
+            SetRandDir();
+            // 製作迷宮
+            CreateMaze();
+        }
+
+        // 畫出迷宮
+        DrawMaze(mazeBlock);
         // 叫出玩家
         CreatePlayer(startPoint);
     }
@@ -202,8 +203,6 @@ public class GameControll : MonoBehaviour
         SetInitBlockData(MazeSizeX, MazeSizeY);
         // 走訪迷宮
         TryMaze(0, 0);
-        // 畫出迷宮
-        DrawMaze(mazeBlock);
     }
 
     void SetInitBlockData(int rows,int cols) {
