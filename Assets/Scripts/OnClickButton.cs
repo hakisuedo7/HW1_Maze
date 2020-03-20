@@ -88,7 +88,7 @@ public class OnClickButton : MonoBehaviour
 
     public void ClickReset()
     {
-        OptionData.VOLUME = 1f;
+        OptionData.VOLUME = 0.8f;
         OptionData.M_SensitivityX = 2f;
         OptionData.M_SensitivityY = 2f;
     }

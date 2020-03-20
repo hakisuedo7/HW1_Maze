@@ -91,7 +91,7 @@ public class GameControll : MonoBehaviour
         // 判斷到達終點(座標)
         if (!GameOver)
         {
-            if(Mathf.Abs(player.transform.position.x - endPoint.x) <= WallScale / 2 && player.transform.position.z - endPoint.z >= WallScale)
+            if (Mathf.Abs(player.transform.position.x - endPoint.x) <= WallScale / 2 && player.transform.position.z - endPoint.z >= WallScale)
             {
                 GameOver = true;
             }
