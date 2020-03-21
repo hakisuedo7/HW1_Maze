@@ -20,7 +20,7 @@ public class ScrollView : MonoBehaviour
             Button btn = BtnObj.GetComponent<Button>();
             btn.SetName(name);
             btn.transform.SetParent(Button_Template.transform.parent);
-            btn.GetComponent<RectTransform>().localScale = new Vector3(0.8f, 1f, 0);
+            btn.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
         }
     }
 
