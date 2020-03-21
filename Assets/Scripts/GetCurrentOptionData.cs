@@ -7,6 +7,7 @@ public class GetCurrentOptionData : MonoBehaviour
 {
     public enum Type{
         volume,
+        effect,
         mxs,
         mxy
     }
@@ -26,6 +27,9 @@ public class GetCurrentOptionData : MonoBehaviour
         {
             case Type.volume:
                 slider.value = OptionData.VOLUME;
+                break;
+            case Type.effect:
+                slider.value = OptionData.EFFECTVOLUME;
                 break;
             case Type.mxs:
                 slider.value = OptionData.M_SensitivityX;

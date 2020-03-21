@@ -6,7 +6,7 @@ public static class OptionData
 {
     // static變數 選項變數
     private static float volume = 0.8f;         // 背景音樂
-    private static float volume_effect = 0.75f; // 效果音(未製作)
+    private static float volume_effect = 0.8f;  // 效果音(未製作)
 
     private static float m_sensitivityX = 2f;
     private static float m_sensitivityY = 2f;
@@ -15,6 +15,11 @@ public static class OptionData
     {
         get { return volume; }
         set { volume = value; }
+    }
+    public static float EFFECTVOLUME
+    {
+        get { return volume_effect; }
+        set { volume_effect = value; }
     }
     public static float M_SensitivityX
     {
