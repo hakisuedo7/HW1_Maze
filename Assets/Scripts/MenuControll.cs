@@ -55,14 +55,22 @@ public class MenuControll : MonoBehaviour
     void LoadAllMaze()
     {
         Debug.Log("load all data");
-        foreach(string path in Directory.GetFiles(MazeData.path))
+        if (Directory.Exists(MazeData.path))
         {
-            string ext = Path.GetExtension(path);
-            if(ext == ".dat")
+            foreach (string path in Directory.GetFiles(MazeData.path))
             {
-                CheckAndSaveMaze(path);         // 副檔名.dat再檢查迷宮是否合法
+                string ext = Path.GetExtension(path);
+                if (ext == ".dat")
+                {
+                    CheckAndSaveMaze(path);         // 副檔名.dat再檢查迷宮是否合法
+                }
             }
         }
+        else
+        {
+            Directory.CreateDirectory(MazeData.path);
+        }
+        
     }
     void CheckAndSaveMaze(string path)
     {

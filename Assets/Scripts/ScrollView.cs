@@ -36,6 +36,7 @@ public class ScrollView : MonoBehaviour
     public void ButtonClicked(string str)
     {
         MazeData.LOAD = true;
+        MazeData.MAZENAME = str;
         SceneManager.LoadScene("MainScene");
     }
 }

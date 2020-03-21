@@ -24,7 +24,7 @@ public static class MazeData
     private static bool load = false;
 
     // 檔案路徑
-    public static string path = "Assets/Resources/Maze/";
+    public static string path = Application.persistentDataPath + "/map/";
 
     // static變數 迷宮長寬
     private static int min = 5;
