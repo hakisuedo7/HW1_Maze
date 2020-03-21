@@ -10,6 +10,7 @@ public class GameControll : MonoBehaviour
     [SerializeField] private GameObject OptionMenu;             // 參數調整選單GameObject
     [SerializeField] private GameObject GameComplete;           // 通關畫面
     [SerializeField] private GameObject InputBox;               // 取名框
+    [SerializeField] private GameObject TimerObj;               // 計時器
     private static bool isPause = false;                        // 是否暫停
     private static bool GameOver = false;                       // 遊戲是否結束
     public bool ISPAUSE                                         // 現在狀態是否暫停(給其他script參考)
@@ -34,7 +35,9 @@ public class GameControll : MonoBehaviour
     GameObject player;                                          // GameObject 玩家 & 牆壁
 
     List<MazeBlockData> mazeBlock = new List<MazeBlockData>();  // 迷宮狀態
-    List<int[]> randDir = new List<int[]>();
+    List<int[]> randDir = new List<int[]>();                    // 方向亂數
+    Timer timer;                                                // Timer Conponent
+
 
     enum WALL_TYPE
     {
@@ -84,6 +87,10 @@ public class GameControll : MonoBehaviour
         DrawMaze(mazeBlock);
         // 叫出玩家
         CreatePlayer(startPoint);
+
+        // 計時器
+        timer = TimerObj.GetComponent<Timer>();
+        timer.TimeStart();
     }
 
     // Update is called once per frame
@@ -104,6 +111,14 @@ public class GameControll : MonoBehaviour
                 GameComplete.SetActive(true);
             else
                 GameComplete.SetActive(false);
+
+            if (timer.IsStart)
+            {
+                TMPro.TextMeshProUGUI TMPU = GameComplete.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[1];
+
+                TMPU.text = "通關時間: " + timer.GetTime().ToString() + "秒";
+                timer.TimeStop();
+            }
         }
         // 判斷是否暫停
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -156,6 +171,8 @@ public class GameControll : MonoBehaviour
         Destroy(player);
         CreatePlayer(startPoint);
         GameOver = false;
+        timer.TimeStop();
+        timer.TimeStart();
     }
     public void showOptionMenu()
     {

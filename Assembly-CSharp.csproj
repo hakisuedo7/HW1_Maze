@@ -77,6 +77,7 @@
     <Compile Include="Assets\Scripts\PlayerControll.cs" />
     <Compile Include="Assets\Scripts\ScrollView.cs" />
     <Compile Include="Assets\Scripts\SetSliderNum.cs" />
+    <Compile Include="Assets\Scripts\Timer.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
