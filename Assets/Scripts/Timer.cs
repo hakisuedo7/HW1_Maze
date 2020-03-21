@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    public bool IsStart;
+    public bool IsStart = false;
     private int timer = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        IsStart = false;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
     public void TimeStart()
     {

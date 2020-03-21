@@ -22,6 +22,11 @@ public class OnValueChange : MonoBehaviour
         GameObject slider = GameObject.Find("Slider_Volume");
         OptionData.VOLUME = slider.GetComponent<Slider>().value;
     }
+    public void VolumeEffect()
+    {
+        GameObject slider = GameObject.Find("Slider_SoundEffect");
+        OptionData.EFFECTVOLUME = slider.GetComponent<Slider>().value;
+    }
     public void MSensitivityX()
     {
         GameObject slider = GameObject.Find("Slider_MSensitivityX");
