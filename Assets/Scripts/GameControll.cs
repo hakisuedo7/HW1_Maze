@@ -64,7 +64,7 @@ public class GameControll : MonoBehaviour
         MazeSizeY = MazeData.MAZE_Y;
 
         // 動態載入角色 && 牆壁
-        playerModel = Resources.Load<GameObject>("Prefabs/Cube");
+        playerModel = Resources.Load<GameObject>("Prefabs/Player");
         wallModel = Resources.Load<GameObject>("Prefabs/Wall");
 
         // 設定起點 && 終點
