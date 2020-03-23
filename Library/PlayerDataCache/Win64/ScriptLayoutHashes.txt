@@ -1,6 +1,6 @@
 Win64
 PlayerPath?
-C:/Users/Ellis_NB/Desktop/Game/Maze.exe
+C:/Users/abc/Desktop/Maze.exe
 SceneListBegin?
 Assets/Scenes/MainMenu.unity
 Assets/Scenes/MainScene.unity
@@ -122,6 +122,7 @@ b8a5e8091ab0b8861d2add371082c5e0 Unity.TextMeshPro.dll:TMPro.TMP_SpriteAsset
 1aa58985f119ebe04bb696caa0270563 Assembly-CSharp.dll:.MenuControll
 71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.OnClickButton
 b3ab2106268377ffe25dd18ac23dca28 Unity.TextMeshPro.dll:TMPro.TMP_Asset
+71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.EffectVolume
 1028c39545bcfa841aaab54121e69a47 Assembly-CSharp.dll:.SetSliderNum
 71bb6a6b6c8f052f948db64c7dd3ca4f Unity.TextMeshPro.dll:TMPro.TMP_SpriteAnimator
 30c4d3706116fc02fd03b6662eca6446 Assembly-CSharp.dll:.Timer
